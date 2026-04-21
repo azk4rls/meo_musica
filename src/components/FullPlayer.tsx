@@ -208,11 +208,9 @@ export function FullPlayer() {
     const extras = smartShuffle(relatedTracks).slice(0, 10);
     if (!extras.length) return;
     extras.forEach((t) => seenIds.add(t.id));
-    setQueue((prev: Track[]) => {
-      const ids = new Set(prev.map((t) => t.id));
-      return [...prev, ...extras.filter((t) => !ids.has(t.id))];
-    });
-  }, [relatedTracks, setQueue]);
+    const ids = new Set(queue.map((t) => t.id));
+    setQueue([...queue, ...extras.filter((t) => !ids.has(t.id))]);
+  }, [relatedTracks, setQueue, queue]);
 
   /* ── lyrics ───────────────────────────────────────────────── */
   const lines: LyricLine[] = React.useMemo(
