@@ -16,6 +16,17 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         },
       }),
   );
+  React.useEffect(() => {
+    try {
+      const t = localStorage.getItem("mowchi-theme");
+      if (t) {
+        const theme = JSON.parse(t);
+        document.documentElement.style.setProperty("--theme-color", theme.main);
+        document.documentElement.style.setProperty("--theme-color-light", theme.light);
+        document.documentElement.style.setProperty("--theme-color-dark", theme.dark);
+      }
+    } catch (e) {}
+  }, []);
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
